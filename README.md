@@ -11,7 +11,7 @@
 ## Main Feature 
 <b>
   
-- [x] Clone Feature & On / Off
+- [x] Clone Feature & On / off
 - [x] Multiple Database Support & On / Off
 - [x] Premium Plan Feature 
 - [x] Refer To Get Premium
@@ -111,13 +111,14 @@ Join My <a href='https://telegram.me/vj_bots'>Update Channel</a> For More Update
 ## Variables
 
 ### Required Variables
-* <b>`BOT_TOKEN`: Create a bot using [@BotFather](https://telegram.dog/BotFather), and get the Telegram API token.
-* `API_ID`: Get this value from [telegram.org](https://my.telegram.org/apps)
-* `API_HASH`: Get this value from [telegram.org](https://my.telegram.org/apps)
-* `CHANNELS`: This Is File Channel, Username or ID of channel or group. Separate multiple IDs by space
-* `ADMINS`: Username or ID of Admin. Separate multiple Admins by space
-* `DATABASE_URI`: [mongoDB](https://www.mongodb.com) URI. Get this value from [mongoDB](https://www.mongodb.com). For more help watch this [video](https://youtu.be/DAHRmFdw99o)
-* `LOG_CHANNEL` : A channel to log the activities of bot. Make sure bot is an admin in the channel.</b>
+* <b>`BOT_TOKEN`:7556904990:AAGOtFtOS0Q7c7p9w3_jhZ3lIgCLY4h8xsg 
+* `API_ID`:21383441
+*`API_HASH`:62141d4cefa2756e4059cbdeac6ab46b
+* `CHANNELS`: 1002658908912
+* `ADMINS`: 
+*`DATABASE_URI`mongodb+srv://fax008f_db_user8PnHdr2NMKU-:NSxUbHMzP4D79SqT @cluster0.nn9tq0c.mongodb.net/?appName=Cluster0
+*` DATABASE_NAME`: mongodb
+* `LOG_CHANNEL` : -1003082828281
 
 
 <details><summary><b>Deploy To Heroku</b></summary>
@@ -204,4 +205,5 @@ Selling The Codes To Other People For Money Is *Strictly Prohibited*.</b>
 </pre>
 </p>
 </details>
+
 
