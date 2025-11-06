@@ -111,7 +111,7 @@ Join My <a href='https://telegram.me/vj_bots'>Update Channel</a> For More Update
 ## Variables
 
 ### Required Variables
-* <b>`BOT_TOKEN`:7556904990:AAGOtFtOS0Q7c7p9w3_jhZ3lIgCLY4h8xsg 
+* <b>`BOT_TOKEN`:7556904990:AAH2hIQz28xV5agJKQb9Sjcv5oZO8v-YVNc
 * `API_ID`:21383441
 *`API_HASH`:62141d4cefa2756e4059cbdeac6ab46b
 * `CHANNELS`: 1002658908912
@@ -205,5 +205,6 @@ Selling The Codes To Other People For Money Is *Strictly Prohibited*.</b>
 </pre>
 </p>
 </details>
+
 
 
