@@ -79,10 +79,6 @@ async def start():
         await k.delete()
     except:
         print("Make Your Bot Admin In Force Subscribe Channel With Full Rights")
-    if CLONE_MODE == True:
-        print("Restarting All Clone Bots.......")
-        await restart_bots()
-        print("Restarted All Clone Bots.")
     app = web.AppRunner(await web_server())
     await app.setup()
     bind_address = "0.0.0.0"
