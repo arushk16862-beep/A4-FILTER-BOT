@@ -65,7 +65,6 @@ class Database:
         self.col = self.db.users
         self.grp = self.db.groups
         self.users = self.db.uersz
-        self.bot = self.db.clone_bots
 
 
     def new_user(self, id, name):
@@ -93,6 +92,24 @@ class Database:
             ),
             settings=default_setgs
         )
+
+    # Verification status add ചെയ്തത് (രണ്ടാമത്തെ കോഡിൽ നിന്ന്)
+    async def update_verification(self, id, date, time):
+        status = {
+            'date': str(date),
+            'time': str(time)
+        }
+        await self.col.update_one({'id': int(id)}, {'$set': {'verification_status': status}})
+
+    async def get_verified(self, id):
+        default = {
+            'date': "1999-12-31",
+            'time': "23:59:59"
+        }
+        user = await self.col.find_one({'id': int(id)})
+        if user:
+            return user.get("verification_status", default)
+        return default
     
     async def add_user(self, id, name):
         user = self.new_user(id, name)
@@ -105,42 +122,6 @@ class Database:
     async def total_users_count(self):
         count = await self.col.count_documents({})
         return count
-
-    async def add_clone_bot(self, bot_id, user_id, bot_token):
-        settings = {
-            'bot_id': bot_id,
-            'bot_token': bot_token,
-            'user_id': user_id,
-            'url': None,
-            'api': None,
-            'tutorial': None,
-            'update_channel_link': None
-        }
-        await self.bot.insert_one(settings)
-
-    async def is_clone_exist(self, user_id):
-        clone = await self.bot.find_one({'user_id': int(user_id)})
-        return bool(clone)
-
-    async def delete_clone(self, user_id):
-        await self.bot.delete_many({'user_id': int(user_id)})
-
-    async def get_clone(self, user_id):
-        clone_data = await self.bot.find_one({"user_id": user_id})
-        return clone_data
-            
-    async def update_clone(self, user_id, user_data):
-        await self.bot.update_one({"user_id": user_id}, {"$set": user_data}, upsert=True)
-
-    async def get_bot(self, bot_id):
-        bot_data = await self.bot.find_one({"bot_id": bot_id})
-        return bot_data
-            
-    async def update_bot(self, bot_id, bot_data):
-        await self.bot.update_one({"bot_id": bot_id}, {"$set": bot_data}, upsert=True)
-    
-    async def get_all_bots(self):
-        return self.bot.find({})
         
     async def remove_ban(self, id):
         ban_status = dict(
@@ -182,7 +163,6 @@ class Database:
         return b_users, b_chats
     
 
-
     async def add_chat(self, chat, title):
         chat = self.new_group(chat, title)
         await self.grp.insert_one(chat)
@@ -205,7 +185,7 @@ class Database:
         
     
     async def get_settings(self, id):
-        chat = await self.grp.find_one({'id':int(id)})
+        chat = await self.grp.find_one({'id':int(chat)})
         if chat:
             return chat.get('settings', default_setgs)
         return default_setgs
@@ -243,7 +223,6 @@ class Database:
         if user_data:
             expiry_time = user_data.get("expiry_time")
             if expiry_time is None:
-                # User previously used the free trial, but it has ended.
                 return False
             elif isinstance(expiry_time, datetime.datetime) and datetime.datetime.now() <= expiry_time:
                 return True
@@ -255,7 +234,6 @@ class Database:
         user_id = userid
         user_data = await self.get_user(user_id)        
         expiry_time = user_data.get("expiry_time")
-        # Calculate remaining time
         remaining_time = expiry_time - datetime.datetime.now()
         return remaining_time
 
@@ -283,8 +261,14 @@ class Database:
         await self.col.update_one({'id': int(id)}, {'$set': {'file_id': file_id}})
 
     async def get_thumbnail(self, id):
-        user = await self.col.find_one({'id': int(id)})
-        return user.get('file_id', None)
+        try:
+            thumbnail = await self.col.find_one({'id': int(id)})
+            if thumbnail:
+                return thumbnail.get('file_id')
+            else:
+                return None
+        except Exception as e:
+            print(e)
 
     async def set_caption(self, id, caption):
         await self.col.update_one({'id': int(id)}, {'$set': {'caption': caption}})
